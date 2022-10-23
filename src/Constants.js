@@ -1,7 +1,7 @@
 const prod = {
   url: {
     KEYCLOAK_BASE_URL: "https://dene231.herokuapp.com/auth",
-    API_BASE_URL: 'http://localhost:9081',
+    API_BASE_URL: 'https://finance-app-last.herokuapp.com/',
     AVATARS_DICEBEAR_URL: 'https://avatars.dicebear.com/api'
 
   }
@@ -10,7 +10,7 @@ const prod = {
 const dev = {
   url: {
     KEYCLOAK_BASE_URL: "https://dene231.herokuapp.com/auth",
-    API_BASE_URL: 'http://localhost:9081',
+    API_BASE_URL: 'https://finance-app-last.herokuapp.com/',
     AVATARS_DICEBEAR_URL: 'https://avatars.dicebear.com/api'
   }
 }
