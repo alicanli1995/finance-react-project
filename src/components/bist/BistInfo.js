@@ -83,9 +83,9 @@ const BistInfo = ({ comingBist }) => {
                 labels: bist.values.map((bist) => {
                   let date = new Date(bist.date);
                   let time =
-                      date.getHours() - 3 > 12
-                          ? `${date.getHours() - 15}:${date.getMinutes()} PM`
-                          : `${date.getHours() - 3}:${date.getMinutes()} AM`;
+                      date.getHours() > 12
+                          ? `${date.getHours() - 12}:${date.getMinutes()} PM`
+                          : `${date.getHours()}:${date.getMinutes()} AM`;
                   return hours === 24 ? time : date.toLocaleDateString();
 
                 }),
