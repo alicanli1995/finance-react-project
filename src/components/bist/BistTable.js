@@ -80,13 +80,10 @@ export default function BistTable() {
   useEffect(async () => {
     fetchBists().then();
     if (keycloak.authenticated) {
-      await bistApi.getFavs(keycloak.token).then(r => {
-        setFavs(r.data.flatMap(f => f.name))
-      });
+        await bistApi.getFavs(keycloak.token).then(r => {setFavs(r.data.flatMap(f => f.name))});
+        await bistApi.getUserShares(keycloak.token).then(r => {setMyBist(r.data);});
     }
-    await bistApi.getUserShares(keycloak.token).then(r => {
-      setMyBist(r.data);
-    });
+
   }, [] );
 
   const addFavorite = async (card, e) => {

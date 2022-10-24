@@ -9,7 +9,6 @@ import ShareForm from "./ShareForm";
 import {toast, ToastContainer} from "react-toastify";
 import {FcEditImage, FcSettings, FcStatistics} from "react-icons/all";
 import {DataContext} from "../misc/Balance";
-import {useHistory} from "react-router-dom";
 
 
 function UserInformation(){
