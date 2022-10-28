@@ -77,8 +77,9 @@ export default function BistTable() {
     setLoading(false);
   };
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
-    fetchBists().then();
+    await fetchBists().then();
     if (keycloak.authenticated) {
         await bistApi.getFavs(keycloak.token).then(r => {setFavs(r.data.flatMap(f => f.name))});
         await bistApi.getUserShares(keycloak.token).then(r => {setMyBist(r.data);});

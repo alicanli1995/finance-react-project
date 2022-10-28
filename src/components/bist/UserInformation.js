@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {useKeycloak } from '@react-keycloak/web'
-import {Container, Grid, Header, Segment, Divider, Form, Button} from 'semantic-ui-react'
+import {useKeycloak} from '@react-keycloak/web'
+import {Button, Container, Divider, Form, Grid, Header, Segment} from 'semantic-ui-react'
 import {getAvatarUrl, handleLogError} from '../misc/Helpers'
 import {bistApi} from '../misc/BistApi'
 import ConfirmationModal from '../misc/ConfirmationModal'
@@ -9,6 +9,9 @@ import ShareForm from "./ShareForm";
 import {toast, ToastContainer} from "react-toastify";
 import {FcEditImage, FcSettings, FcStatistics} from "react-icons/all";
 import {DataContext} from "../misc/Balance";
+import {makeStyles} from "@material-ui/core";
+import {Line} from "react-chartjs-2";
+import {CChart, CChartLine} from "@coreui/react-chartjs";
 
 
 function UserInformation(){
@@ -26,18 +29,15 @@ function UserInformation(){
     onAction: null,
     onClose: null
   });
-  let [firstAvatar, setFirstAvatar] = useState('')
-
-
-    const {setBalance} = useContext(DataContext)
-
-  let [bodyState, setBodyState] = useState("bistBody");
-
 
   let [username, setUsername] = useState('');
   let [avatar, setAvatar] = useState('');
   let [originalAvatar, setOriginalAvatar] = useState('');
   let [imageLoading, setImageLoading] = useState(false);
+  let [firstAvatar, setFirstAvatar] = useState('');
+  const {setBalance} = useContext(DataContext);
+  let [bodyState, setBodyState] = useState("bistBody");
+  let [finance, setFinance] = useState([]);
 
 
 
@@ -46,11 +46,14 @@ function UserInformation(){
       handleGetShares().then()
       try {
           const response = await bistApi.getUserExtrasMe(keycloak.token)
-          console.log(response)
           setUsername(response.data.username)
           setAvatar(response.data.avatar)
           setOriginalAvatar(response.data.avatar)
           setFirstAvatar(response.data.avatar)
+          await bistApi.getFinanceHistory(keycloak.token).then(response => {
+              setFinance(response.data)
+              console.log(response.data)
+          });
       } catch (error) {
           handleLogError(error)
       }
@@ -109,6 +112,7 @@ function UserInformation(){
         keycloak.token
       )
       setBists(response.data)
+        console.log(response.data)
     } catch (error) {
       handleLogError(error)
     }
@@ -218,6 +222,102 @@ function UserInformation(){
 
     let bistBody = "";
 
+    const useStyles = makeStyles((theme) => ({
+        container: {
+            width: "75%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            [theme.breakpoints.down("md")]: {
+                width: "100%",
+                marginTop: 0,
+                padding: 20,
+                paddingTop: 0,
+            },
+        },
+    }));
+
+
+    const classes = useStyles();
+
+    if (bodyState === "statistics") {
+        bistBody = (
+            <div className={classes.container}>
+            <Grid centered>
+                <Grid.Column computer={6}>
+
+                    <CChart
+                        style={{width: 300, height: 300}}
+                        type="doughnut"
+                        data = {{
+                            labels: bists.map((bist) => {
+                                return bist.name;
+                            }),
+                            datasets: [
+                                {
+                                    data: bists.map((bist) => bist.amount),
+                                    label: `Price ( Past ${finance.history.length} Days ) in TL`,
+                                    backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
+                                    borderColor: "#EEBC1D",
+                                }],
+                        }}
+                    />
+
+
+                </Grid.Column>
+                <Grid.Column/>
+                <Grid.Column/>
+                <Grid.Column computer={8} >
+                    <CChart
+                        style={{height: 300, width: 600}}
+                        type="bar"
+                        data = {{
+                            labels: finance.history.map((bist) => {
+                                const date =  new Date(bist.date);
+                                return date.toLocaleDateString();
+                            }),
+                            datasets: [
+                                {
+                                    data: finance.history.map((bist) => bist.totalDailyChange),
+                                    label: `Price ( Past ${finance.history.length} Days ) in TL`,
+                                    backgroundColor: "#854d0e",
+                                    borderColor: "#EEBC1D",
+                                },
+                            ],
+                        }}
+                    />
+                </Grid.Column>
+                <Grid.Row/>
+                <Grid.Row>
+                    <CChart
+                        type={"line"}
+                        style={{width: 600, height: 300,marginLeft: 150}}
+                        data={{
+                            labels: finance.history.map((bist) => {
+                                const date =  new Date(bist.date);
+                                return date.toLocaleDateString();
+                            }),
+                            datasets: [
+                                {
+                                    data: finance.history.map((bist) => bist.totalDailyValue),
+                                    label: `Price ( Past ${finance.history.length} Days ) in TL`,
+                                    borderColor: "#EEBC1D",
+                                },
+                            ],
+                        }}
+                    />
+                </Grid.Row>
+                <Grid.Row/>
+                <Grid.Row/>
+                <Grid.Row/>
+                <Grid.Row/>
+            </Grid>
+            </div>
+
+        );
+    }
+
     if (bodyState === "settingsBody") {
         const avatarImage = !avatar ? <></> : <img src={getAvatarUrl(avatar)} onLoad={handleImageLoad} alt='user-avatar' />
         bistBody =
@@ -294,7 +394,7 @@ function UserInformation(){
                 <br/>
                 Edit Share
               </a>
-              <a className="item">
+              <a className="item" onClick={() => setBodyState("statistics")}>
                 <FcStatistics size={30} />
                 <br/>
                 Statistics

@@ -6,6 +6,7 @@ export const bistApi = {
   deleteBist,
   userFavAdd,
   getComments,
+  getFinanceHistory,
   getFavs,
   addBistComment,
   getUserExtrasMe,
@@ -17,6 +18,15 @@ export const bistApi = {
   deleteShareOnUser,
   getBists,
   getBistWithHistory,
+}
+
+function getFinanceHistory(token){
+  return instance.get('/api/finance', {
+    headers: {
+      'Content-type': 'application/json',
+      'Authorization': bearerAuth(token)
+    }
+  })
 }
 
 function getFavs(token){

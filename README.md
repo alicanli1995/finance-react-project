@@ -10,7 +10,7 @@
 
 ## Planned improvements ->
 
-- Statistics Page (Dashboard showing statistics of daily earnings)
+- Statistics Page (Dashboard showing statistics of daily earnings) ✔️But not fully completed
 - Customize Keycloak Login Page
 - Localization
 - Validations
