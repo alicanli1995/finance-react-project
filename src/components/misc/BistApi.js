@@ -6,6 +6,7 @@ export const bistApi = {
   deleteBist,
   userFavAdd,
   getComments,
+  deleteComment,
   getFinanceHistory,
   getFavs,
   addBistComment,
@@ -141,6 +142,16 @@ function addBistComment(name, comment, token) {
   })
 }
 
+function deleteComment(bist, token, comment) {
+  return instance.post(`/api/bists/${bist}/delete/comments`, {comment},{
+    headers: {
+      'Content-type': 'application/json',
+      'Authorization': bearerAuth(token)
+    }
+  })
+}
+
+
 function getUserExtrasMe(token) {
   return instance.get(`/api/userextras/me`, {
     headers: {
@@ -151,7 +162,6 @@ function getUserExtrasMe(token) {
 }
 
 function saveUserExtrasMe(token, userExtra) {
-  console.log(userExtra)
   return instance.post(`/api/userextras/me`, userExtra, {
     headers: {
       'Content-type': 'application/json',

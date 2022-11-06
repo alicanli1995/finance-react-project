@@ -73,7 +73,7 @@ class BistComments extends Component {
                                     handleAddComment={this.handleAddComment}
                                     handleChange={this.handleChange}
                                 />
-                                <BistComment comments={comments ? comments : []} />
+                                <BistComment bistName={bist.name} comments={comments ? comments : []} />
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
