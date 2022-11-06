@@ -36,12 +36,6 @@ const BistInfo = ({ comingBist }) => {
     setflag(true);
   };
 
-  // useEffect(() => {
-  //     fetchBist(hours);
-  // }, [hours]);
-
-
-
   const darkTheme = createTheme({
     palette: {
       primary: {

@@ -3,14 +3,14 @@ import {useContext, useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import ReactHtmlParser from "react-html-parser";
 import BistInfo from "./BistInfo";
-import {numberWithCommas} from "./BistTable";
+import {numberWithCommas} from "../homepage/BistTable";
 import "react-awesome-button/dist/styles.css";
 import {bistApi} from '../misc/BistApi'
 import {Button, Grid} from "semantic-ui-react";
 import {useKeycloak} from "@react-keycloak/web";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import BistComments from "./BistComments";
+import BistComments from "../comment/BistComments";
 import {DataContext} from "../misc/Balance";
 
 const SingleBistPage = () => {

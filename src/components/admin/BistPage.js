@@ -4,7 +4,7 @@ import { Container, Grid, Header, Segment, Icon, Divider } from 'semantic-ui-rea
 import {handleLogError, isAdmin} from '../misc/Helpers'
 import {bistApi} from '../misc/BistApi'
 import BistForm from './BistForm'
-import BistsTable from './BistsTable'
+import BistsTable from '../homepage/BistsTable'
 import { Redirect } from 'react-router-dom'
 import ConfirmationModal from '../misc/ConfirmationModal'
 

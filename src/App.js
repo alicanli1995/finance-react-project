@@ -6,10 +6,10 @@ import {makeStyles} from "@material-ui/core";
 import "./components/home/App.css";
 import Footer from './components/footer/Footer';
 import PrivateRoute from "./components/misc/PrivateRoute";
-import BistsPage from "./components/bist/BistPage";
-import SingleBistPage from "./components/bist/SingleBistPage";
+import BistsPage from "./components/admin/BistPage";
+import SingleBistPage from "./components/single-bist/SingleBistPage";
 import UserSettings from "./components/settings/UserSettings";
-import UserInformation from "./components/bist/UserInformation";
+import UserInformation from "./components/user/UserInformation";
 
 const useStyles = makeStyles(() => ({
   App: {

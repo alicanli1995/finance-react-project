@@ -296,6 +296,7 @@ export default function BistTable() {
                           {"₺"}{" "}
                         </TableCell>
                         <TableCell
+                          onClick={() => history.push(`/history/${row.name}`)}
                           align="center"
                           style={{
                             color: profit > 0 ? "rgb(14, 203, 129)" : "red",

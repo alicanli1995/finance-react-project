@@ -11,6 +11,7 @@
 ## Planned improvements ->
 
 - Statistics Page (Dashboard showing statistics of daily earnings) ✔️But not fully completed
+- Customer comments deleted from shares button is implemented ✔
 - Customize Keycloak Login Page
 - Localization
 - Validations
