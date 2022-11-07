@@ -138,7 +138,7 @@ const SingleBistPage = () => {
                 <Grid.Column/>
                 <Grid.Column width={5}>
                     <img
-                        src={bist?.poster}
+                        src={`/images/${bist?.name}.png` ? `/images/${bist?.name}.png` : '/images/default.png'}
                         alt={bist?.name}
                         height="200"
                         width="200"

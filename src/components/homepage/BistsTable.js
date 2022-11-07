@@ -34,7 +34,7 @@ function BistsTable({ bists, handleDeleteBist, handleEditBist }) {
         <Table.Cell>{bist.dailyChangePercentage}</Table.Cell>
         <Table.Cell>{bist.dailyVolume}</Table.Cell>
         <Table.Cell>
-          <Image size='tiny' src={bist.poster ? bist.poster : '/images/movie-poster.jpg'} rounded />
+          <Image size='tiny' src={`/images/${bist.name}.png` ? `/images/${bist.name}.png` : '/images/default.png'} rounded />
         </Table.Cell>
       </Table.Row>
     )

@@ -42,10 +42,10 @@ const Carousel = () => {
     return (
       <Link className={classes.carouselItem} to={`/history/${bist.name}`}>
         <img
-          src={bist?.poster}
-          alt={bist.name}
-          height="80"
-          style={{ marginBottom: 10 }}
+            src={`/images/${bist.name}.png` ? `/images/${bist.name}.png` : '/images/default.png'}
+            alt={bist.name}
+            height="80"
+            style={{ marginBottom: 10 }}
         />
         <br/>
           <span

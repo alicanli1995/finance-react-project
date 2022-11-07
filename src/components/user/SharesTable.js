@@ -31,7 +31,7 @@ function SharesTable({ bists, handleDeleteBist, handleEditBist }) {
         </Table.Cell>
 
           <Table.Cell>
-              <Image centered={"center"} size='tiny' src={bist.poster ? bist.poster : '/images/movie-poster.jpg'} rounded />
+              <Image centered={"center"} size='tiny' src={`/images/${bist.name}.png` ? `/images/${bist.name}.png` : '/images/default.png'} rounded />
           </Table.Cell>
         <Table.Cell verticalAlign={"middle"} textAlign={"center"}>{bist.name}</Table.Cell>
         <Table.Cell verticalAlign={"middle"} textAlign={"center"}>{bist.amount}</Table.Cell>

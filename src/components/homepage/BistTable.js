@@ -267,10 +267,10 @@ export default function BistTable() {
                           }}
                         >
                           <img
-                            src={row?.poster}
-                            alt={row.name}
-                            height="50"
-                            style={{ marginBottom: 10 , height: 75, width: 75}}
+                                src={`/images/${row.name}.png` ? `/images/${row.name}.png` : '/images/default.png'}
+                                alt={row.name}
+                                height="50"
+                                style={{ marginBottom: 10 , height: 75, width: 75}}
                           />
                           <div
                             style={{ display: "flex", flexDirection: "column" }}
