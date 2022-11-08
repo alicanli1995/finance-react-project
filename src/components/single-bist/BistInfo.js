@@ -17,7 +17,7 @@ const BistInfo = ({ comingBist }) => {
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      marginTop: 130,
+      marginTop: "2rem",
       marginLeft: 30,
       [theme.breakpoints.down("md")]: {
         width: "100%",
