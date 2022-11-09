@@ -10,13 +10,7 @@ function BistComment({ comments,bistName }) {
     const { keycloak } = useKeycloak();
     let [commentList, setCommentList] = useState('');
     const height = window.innerHeight - 400
-    const style = {
-        height: height,
-        maxHeight: height - 250,
-        overflowY: 'auto',
-        overflowX: 'hidden',
-        maxWidth: 'none'
-    }
+
     const getNotification = (message) => {
         return (
             toast.success(`${message} 💯🏆🙌`, {
@@ -83,8 +77,10 @@ function BistComment({ comments,bistName }) {
                   {comment.text}
                         </Grid.Column>
                   {comment.username === getUsername() &&
-                  <Button variant="outlined" color="secondary" onClick={() => deleteComment(comment.text)} style={
-                    {float: "inline-end" , width: 100, height: 30, fontSize: 10, marginBottom: 30}}>❌</Button>}
+                  <Button variant="outlined" color="secondary" onClick={() => deleteComment(comment.text)}
+                          style={
+                    { width: 60, height: 30, fontSize: 10  }
+                  }>❌</Button>}
                   </Grid>
               </Comment.Text>
             </Comment.Content>
@@ -94,13 +90,33 @@ function BistComment({ comments,bistName }) {
     }, [comments])
 
   return (
-    <>
-      <Header>Comments</Header>
-      <Divider />
-      <Comment.Group style={style}>
+      <>
+        <div style={
+            {
+                width: 700,
+                marginTop: 15,
+                marginLeft: 180,
+                borderRadius: 10,
+            }}>
+            <Header textAlign={"center"}>Comments</Header>
+            <Divider />
+        </div>
+      <Comment.Group style={
+        {
+            height: height,
+            marginTop: 15,
+            marginLeft: 180,
+            overflowY: "scroll",
+            overflowX: "hidden",
+            maxWidth: 700,
+            maxHeight: height - 250,
+
+        }
+      }>
+
         {commentList}
       </Comment.Group>
-    </>
+      </>
   )
 }
 
