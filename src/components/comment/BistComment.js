@@ -95,7 +95,7 @@ function BistComment({ comments,bistName }) {
             {
                 width: 700,
                 marginTop: 15,
-                marginLeft: 180,
+                marginLeft: 230,
                 borderRadius: 10,
             }}>
             <Header textAlign={"center"}>Comments</Header>
@@ -105,7 +105,7 @@ function BistComment({ comments,bistName }) {
         {
             height: height,
             marginTop: 15,
-            marginLeft: 180,
+            marginLeft: 230,
             overflowY: "scroll",
             overflowX: "hidden",
             maxWidth: 700,

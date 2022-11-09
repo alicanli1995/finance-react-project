@@ -184,7 +184,7 @@ const SingleBistPage = () => {
                             width: 300,
                             height: 200,
                             marginTop: -15,
-                            marginLeft: 250,
+                            marginLeft: 270,
                             backgroundColor: "#f5f5f5",
                             borderRadius: 10,
                             boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",

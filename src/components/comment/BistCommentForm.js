@@ -8,7 +8,7 @@ function BistCommentForm({ authenticated, commentText, handleAddComment, handleC
             width: 700,
             height: 150,
             marginTop: 15,
-            marginLeft: 180,
+            marginLeft: 230,
             backgroundColor: "#f5f5f5",
             borderRadius: 10,
             boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",

@@ -12,12 +12,12 @@
 
 - Statistics Page (Dashboard showing statistics of daily earnings) ✔️But not fully completed
 - Customer comments deleted from shares button is implemented ✔
-- Customize Keycloak Login Page
-- Localization
-- Validations
-- Dark Theme
-- Single Bist Page , improvements in page design
-- Some bug fixing
+- Single Bist Page , improvements in page design ✔
+- Validations ✔ (Not fully completed)
+- Some bug fixing ✔ 
+- Customize Keycloak Login Page ( X )
+- Localization ( X )
+- Dark Theme ( X )
 
 **_If there is a stock market stock you want to add, if you see missing, erroneous places, please contact us by e-mail: alicanli1995@gmail.com. If you want, you can open an issue, fix it and commit it._**
 
