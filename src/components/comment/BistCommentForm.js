@@ -3,8 +3,24 @@ import { Header, Form, Dimmer, Divider } from 'semantic-ui-react'
 
 function BistCommentForm({ authenticated, commentText, handleAddComment, handleChange }) {
   return (
-    <>
-      <Header>Add a comment</Header>
+    <div style={
+        {
+            width: 700,
+            height: 150,
+            marginTop: 15,
+            marginLeft: 180,
+            backgroundColor: "#f5f5f5",
+            borderRadius: 10,
+            boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
+            border: "1px solid #e5e5e5",
+            padding: 10,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+
+        }
+    }>
+      <Header textAlign={"center"}>Add a comment</Header>
       <Divider />
       <Dimmer.Dimmable dimmed={!authenticated}>
         <Form onSubmit={handleAddComment}>
@@ -32,7 +48,7 @@ function BistCommentForm({ authenticated, commentText, handleAddComment, handleC
           <Header inverted>To add a comment you must be logged in</Header>
         </Dimmer>
       </Dimmer.Dimmable>
-    </>
+    </div>
   )
 }
 

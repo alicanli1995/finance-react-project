@@ -1,4 +1,4 @@
-import {Input, LinearProgress, makeStyles, Typography} from "@material-ui/core";
+import {Card, Input, LinearProgress, makeStyles, Typography} from "@material-ui/core";
 import {useContext, useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import ReactHtmlParser from "react-html-parser";
@@ -49,7 +49,6 @@ const SingleBistPage = () => {
 
     const changeBalance = async () => {
         await bistApi.getBalanceOnUser(keycloak.token).then((response) => {
-                console.log(response.data)
                 setBalance(response.data);
             }
         ).catch((error) => {
@@ -131,6 +130,31 @@ const SingleBistPage = () => {
 
     if (!bist) return <LinearProgress style={{ backgroundColor: "gold" }} />;
 
+    function addInputOnVal(s) {
+        document.getElementById('amount').value = s;
+    }
+
+    function getNotificationForValidation() {
+        return (
+            toast.error('Please enter a valid number ! 🙄', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
+        );
+    }
+
+    function validationForAboveZero() {
+        if (document.getElementById('amount').value <= 0) {
+            document.getElementById('amount').value = 1;
+            getNotificationForValidation();
+        }
+    }
+
     return (
         <div className={classes.container}>
             <Grid >
@@ -142,79 +166,89 @@ const SingleBistPage = () => {
                         alt={bist?.name}
                         height="200"
                         width="200"
-                        style={{  marginLeft: 200, marginTop: 50, marginBottom: 50 }}
+                        style={{  marginLeft: 200, marginTop: 100, marginBottom: 50 }}
                     />
                     <Typography variant="h4" className={classes.heading}
-                    style={{marginLeft : 250}}>
-                        {bist?.name}
+                    style={{marginLeft : 150}}>
+                        {bist?.name} ->  {bist.values[bist.values.length - 1].value+" TL"}
                     </Typography>
-                    <Typography  style={{marginLeft : 80}} variant="subtitle1" className={classes.description}>
-                        {ReactHtmlParser(bist?.description)}.
-                    </Typography>
-                    <div className={classes.marketData}>
-              <span style={{ display: "flex" }}>
-                <Typography  style={{marginLeft : 80}} variant="h6" className={classes.heading}>
-                  Rank:
-                </Typography>
-                  &nbsp; &nbsp;
-                  <Typography
-                      variant="h6"
-                      style={{
-                          fontFamily: "Montserrat",
-                      }}
-                  >
-                  {bist?.rank}
-                </Typography>
-              </span>
-
-                        <span style={{ display: "flex" }}>
-                <Typography variant="h6" className={classes.heading}  style={{marginLeft : 80}}>
-                  Current Price:
-                </Typography>
-                            &nbsp; &nbsp;
-                            <Typography
-                                variant="h6"
-                                style={{
-                                    fontFamily: "Montserrat",
-                                }}
-                            >
-                  {bist.values[bist.values.length - 1].value+" TL"}
-                </Typography>
-              </span>
-                        <span style={{ display: "flex" }}>
-                <Typography variant="h6" className={classes.heading}  style={{marginLeft : 80}}>
-                    Total Volume: &nbsp;
-                </Typography>
-                            <Typography
-                                variant="h6"
-                                style={{fontFamily: "Montserrat"}}>
-                      {numberWithCommas(Number(bist.dailyVolume))} TL
-                </Typography>
-
-                    </span>
+                </Grid.Column>
+                <Grid.Column width={10}>
+                    <BistInfo comingBist={bist} />
+                </Grid.Column >
+            </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column width={5}>
+                    <Card style={
+                        {
+                            width: 300,
+                            height: 200,
+                            marginTop: -15,
+                            marginLeft: 250,
+                            backgroundColor: "#f5f5f5",
+                            borderRadius: 10,
+                            boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
+                            border: "1px solid #e5e5e5",
+                            padding: 10,
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",
+                        }
+                    }>
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <Button style={{ color: "green" ,
+                                backgroundColor: "#f5f5f5",
+                                border: "1px solid #e5e5e5",
+                                borderRadius: 10,
+                                boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
+                                padding: 10,
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-between",}} onClick={() => addInputOnVal(50)}>50</Button>
+                            <Button style={{ color: "green" ,
+                                backgroundColor: "#f5f5f5",
+                                border: "1px solid #e5e5e5",
+                                borderRadius: 10,
+                                boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
+                                padding: 10,
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-between",}} onClick={() => addInputOnVal(100)}>100</Button>
+                            <Button style={{ color: "green" ,
+                                backgroundColor: "#f5f5f5",
+                                border: "1px solid #e5e5e5",
+                                borderRadius: 10,
+                                boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
+                                padding: 10,
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-between",}} onClick={() => addInputOnVal(200)}>200</Button>
+                            <Button style={{ color: "green" ,
+                                backgroundColor: "#f5f5f5",
+                                border: "1px solid #e5e5e5",
+                                borderRadius: 10,
+                                boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
+                                padding: 10,
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-between",}} onClick={() => addInputOnVal(500)}>500</Button>
+                        </div>
                         <Input type="number" id="amount" disabled={(!keycloak.authenticated)}
-                        inputProps={{ min: "0", max: "10000", step: "1" }}
-                        style={{color: "black" , width: "160px", height: "30px", marginLeft: 190}}
+                        inputProps={{ min: "0", max: "10000", step: "1", style: { textAlign: "center" } }}
                                placeholder="Amount"/>
                         <Button
-                            onClick={addPortfolio}
+                            onClick={() => addPortfolio && validationForAboveZero()}
                             disabled={(!keycloak.authenticated)}
-                            style={{marginLeft: 180, marginTop: 10,
+                            style={{
                                 backgroundColor: "gold", fontFamily: "Montserrat", fontSize: "15px", fontWeight: "bold"}}
                             type="primary">{keycloak.authenticated ?"Add My Portfolio": "Please First Login!"}
                         </Button>
-                    </div>
-                    </Grid.Column>
-                    <Grid.Column width={10}>
-                            <BistInfo comingBist={bist} />
-                    </Grid.Column >
-                    <ToastContainer />
-                 </Grid.Row>
 
-                <Grid.Row columns={16}>
-                    <Grid.Column/>
-                    <Grid.Column width={16}>
-                    <BistComments />
+                    </Card>
+                    <ToastContainer />
+                            </Grid.Column>
+                    <Grid.Column width={10}>
+                           <BistComments/>
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row columns={16}/>
