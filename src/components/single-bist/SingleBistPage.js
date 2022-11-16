@@ -149,10 +149,12 @@ const SingleBistPage = () => {
     }
 
     function validationForAboveZero() {
-        if (document.getElementById('amount').value <= 0) {
-            document.getElementById('amount').value = 1;
+        if (document.querySelector("#amount").value <= 0) {
+            document.querySelector("#amount").value = 1;
             getNotificationForValidation();
+            return false;
         }
+        return true;
     }
 
     return (
