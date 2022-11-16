@@ -228,7 +228,7 @@ export default function BistTable() {
             <Table aria-label="simple table">
               <TableHead style={{ backgroundColor: "ButtonHighlight"}}>
                 <TableRow>
-                  {["Name", "Price", "24h Change", "Total Volume","Favourite"].map((head) => (
+                  {["Name", "Price", "24H Change", "24H Volume","Favourite"].map((head) => (
                     <TableCell
                       style={{
                         color: "black",
@@ -308,7 +308,7 @@ export default function BistTable() {
                         </TableCell>
                         <TableCell align="center" style={{color: "black",fontWeight: 1000,}}
                                    onClick={() => history.push(`/history/${row.name}`)}>
-                          {numberWithCommas(Number(row.dailyVolume))} ₺
+                          {(row.dailyVolume)} ₺
                         </TableCell>
                         <TableCell align={"center"} style={{
                             color: "black",
