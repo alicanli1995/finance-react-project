@@ -121,6 +121,7 @@ const SingleBistPage = () => {
                                     onAction: null,
                                     onClose: null
                                 })
+                                setUserNotify(true);
                             })
                         } else {
                             toast.warn("Notification adding cancelled!",
