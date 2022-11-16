@@ -239,7 +239,7 @@ const SingleBistPage = () => {
                         inputProps={{ min: "0", max: "10000", step: "1", style: { textAlign: "center" } }}
                                placeholder="Amount"/>
                         <Button
-                            onClick={() => addPortfolio && validationForAboveZero()}
+                            onClick={() => addPortfolio() && validationForAboveZero()}
                             disabled={(!keycloak.authenticated)}
                             style={{
                                 backgroundColor: "gold", fontFamily: "Montserrat", fontSize: "15px", fontWeight: "bold"}}
