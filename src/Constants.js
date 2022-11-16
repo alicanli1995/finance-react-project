@@ -10,7 +10,7 @@ const prod = {
 const dev = {
   url: {
     KEYCLOAK_BASE_URL: "https://dene231.herokuapp.com/auth",
-    API_BASE_URL: 'https://bist-finance-app.herokuapp.com/',
+    API_BASE_URL: 'http://localhost:9081/',
     AVATARS_DICEBEAR_URL: 'https://avatars.dicebear.com/api'
   }
 }

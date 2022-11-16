@@ -1,9 +1,7 @@
 import {Card, Input, LinearProgress, makeStyles, Typography} from "@material-ui/core";
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
-import ReactHtmlParser from "react-html-parser";
 import BistInfo from "./BistInfo";
-import {numberWithCommas} from "../homepage/BistTable";
 import "react-awesome-button/dist/styles.css";
 import {bistApi} from '../misc/BistApi'
 import {Button, Grid} from "semantic-ui-react";
@@ -12,12 +10,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BistComments from "../comment/BistComments";
 import {DataContext} from "../misc/Balance";
+import ConfirmationModal from "../misc/ConfirmationModal";
+import {FcAlarmClock} from "react-icons/all";
 
 const SingleBistPage = () => {
     const { id } = useParams();
     const [bist, setBist] = useState();
     const { keycloak } = useKeycloak();
     const {setBalance} = useContext(DataContext)
+    const [userNotify, setUserNotify] = useState(false);
 
     const fetchBist = async () => {
         const { data } = await bistApi.getBistWithHistory( id , 24);
@@ -25,9 +26,138 @@ const SingleBistPage = () => {
     };
 
     useEffect(() => {
-        fetchBist().then();
+        fetchBist().then( () => {
+                if (keycloak.authenticated) {
+                    bistApi.isNotification(id, keycloak.tokenParsed.email).then( (response) => {
+                        if (response.data) {
+                            setUserNotify(true);
+                            document.getElementById("notification").style.color = "red";
+
+                        }else {
+                            setUserNotify(false);
+                            document.getElementById("notification").style.color = "black";
+                        }
+                    })
+                }
+                else {
+                    document.getElementById("notification").style.opacity = "0";
+                }
+            }
+        );
     }, []);
 
+
+    let [modal, setModal] = useState({
+        isOpen: false,
+        header: '',
+        content: '',
+        onAction: null,
+        onClose: null
+    });
+
+    async function addNotification(bistName){
+        if(keycloak.authenticated) {
+            if (userNotify) {
+                toast.warn("You already have notification for this bist", {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                return;
+            }
+            setModal(
+                {
+                    isOpen: true,
+                    header: 'Add Notification',
+                    content: <div>
+                        <Input type="number" placeholder="Price" id={"bistValue"}/>
+                        <br/>
+                        <br/>
+                    </div>,
+                    onClose: () => {
+                        toast.warn("Notification adding cancelled!",
+                            {
+                                position: toast.POSITION.BOTTOM_RIGHT,
+                                autoClose: 3000,
+                                hideProgressBar: true,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                            });
+                        setModal({
+                            isOpen: false,
+                            header: '',
+                            content: '',
+                            onAction: null,
+                            onClose: null
+                        })
+                    },
+                    onAction: (response) => {
+                        if (response) {
+                            bistApi.addNotification({
+                                bistName: bistName,
+                                value: document.getElementById("bistValue").value,
+                                mail: keycloak.tokenParsed.email
+                            }).then(() => {
+                                toast.success("Notification added successfully!",
+                                    {
+                                        position: toast.POSITION.BOTTOM_RIGHT,
+                                        autoClose: 3000,
+                                        hideProgressBar: true,
+                                        closeOnClick: true,
+                                        pauseOnHover: true,
+                                        draggable: true,
+                                        progress: undefined,
+                                    });
+                                setModal({
+                                    isOpen: false,
+                                    header: '',
+                                    content: '',
+                                    onAction: null,
+                                    onClose: null
+                                })
+                            })
+                        } else {
+                            toast.warn("Notification adding cancelled!",
+                                {
+                                    position: toast.POSITION.BOTTOM_RIGHT,
+                                    autoClose: 3000,
+                                    hideProgressBar: true,
+                                    closeOnClick: true,
+                                    pauseOnHover: true,
+                                    draggable: true,
+                                    progress: undefined,
+                                });
+                            setModal({
+                                isOpen: false,
+                                header: '',
+                                content: '',
+                                onAction: null,
+                                onClose: null
+                            })
+                        }
+                    }
+                }
+            )
+        }else{
+            toast.error("You must login to add notification!",
+                {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+        }
+
+    }
 
     const addPortfolio =  async () => {
         const data = {
@@ -69,9 +199,6 @@ const SingleBistPage = () => {
             })
         );
     }
-
-
-
 
     const useStyles = makeStyles((theme) => ({
         container: {
@@ -123,8 +250,6 @@ const SingleBistPage = () => {
             },
         },
     }));
-
-
 
     const classes = useStyles();
 
@@ -178,6 +303,11 @@ const SingleBistPage = () => {
                 <Grid.Column width={10}>
                     <BistInfo comingBist={bist} />
                 </Grid.Column >
+                <Grid.Column width={10}>
+                    <FcAlarmClock id={"notification"} style={{marginLeft: 1700, marginTop: -900, width: 66 , height: 66,cursor:"pointer"}}
+                         onClick={() => addNotification(bist?.name)}  />
+                    <ConfirmationModal modal={modal} />
+                </Grid.Column>
             </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width={5}>
@@ -247,7 +377,6 @@ const SingleBistPage = () => {
                         </Button>
 
                     </Card>
-                    <ToastContainer />
                             </Grid.Column>
                     <Grid.Column width={10}>
                            <BistComments/>
@@ -255,6 +384,7 @@ const SingleBistPage = () => {
                 </Grid.Row>
                 <Grid.Row columns={16}/>
                 <Grid.Row columns={16}/>
+                <ToastContainer />
             </Grid>
         </div>
     );

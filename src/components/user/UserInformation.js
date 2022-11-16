@@ -10,8 +10,7 @@ import {toast, ToastContainer} from "react-toastify";
 import {FcEditImage, FcSettings, FcStatistics} from "react-icons/all";
 import {DataContext} from "../misc/Balance";
 import {makeStyles} from "@material-ui/core";
-import {Line} from "react-chartjs-2";
-import {CChart, CChartLine} from "@coreui/react-chartjs";
+import {CChart} from "@coreui/react-chartjs";
 
 
 function UserInformation(){

@@ -19,6 +19,24 @@ export const bistApi = {
   deleteShareOnUser,
   getBists,
   getBistWithHistory,
+  addNotification,
+  isNotification
+}
+
+function isNotification(bistName,mailAddress){
+  return instance.get(`/api/notifications?bistName=${bistName}&mailAddress=${mailAddress}`, {
+    headers: {
+      'Content-type': 'application/json',
+    }
+  })
+}
+
+function addNotification(notification) {
+  return instance.post(`/api/notifications`, notification, {
+    headers: {
+      'Content-type': 'application/json',
+    }
+    })
 }
 
 function getFinanceHistory(token){
