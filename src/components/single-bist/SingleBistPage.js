@@ -217,7 +217,7 @@ const SingleBistPage = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            marginTop: 25,
+            marginTop: "2.5rem",
             borderRight: "2px solid grey",
         },
         heading: {
@@ -294,21 +294,21 @@ const SingleBistPage = () => {
                         alt={bist?.name}
                         height="200"
                         width="200"
-                        style={{  marginLeft: 200, marginTop: 100, marginBottom: 50 }}
+                        style={{  marginLeft: "12rem",
+                            marginTop: "2rem",
+                            marginBottom: "2rem" }}
                     />
                     <Typography variant="h4" className={classes.heading}
-                    style={{marginLeft : 150}}>
+                    style={{marginLeft : "10rem"}}>
                         {bist?.name} ->  {bist.values[bist.values.length - 1].value+" TL"}
                     </Typography>
+                        <FcAlarmClock id={"notification"} style={{marginLeft: "17rem", marginTop: "1rem", width: 66 , height: 66,cursor:"pointer"}}
+                                      onClick={() => addNotification(bist?.name)}  />
+                        <ConfirmationModal modal={modal} />
                 </Grid.Column>
                 <Grid.Column width={10}>
                     <BistInfo comingBist={bist} />
                 </Grid.Column >
-                <Grid.Column width={10}>
-                    <FcAlarmClock id={"notification"} style={{marginLeft: 1700, marginTop: -900, width: 66 , height: 66,cursor:"pointer"}}
-                         onClick={() => addNotification(bist?.name)}  />
-                    <ConfirmationModal modal={modal} />
-                </Grid.Column>
             </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width={5}>
@@ -316,8 +316,7 @@ const SingleBistPage = () => {
                         {
                             width: 300,
                             height: 200,
-                            marginTop: -15,
-                            marginLeft: 270,
+                            marginLeft: "17rem",
                             backgroundColor: "#f5f5f5",
                             borderRadius: 10,
                             boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
