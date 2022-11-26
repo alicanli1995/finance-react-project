@@ -15,6 +15,7 @@
 - Single Bist Page , improvements in page design ✔
 - Validations ✔ (Not fully completed)
 - Some bug fixing ✔ 
+- Sorting Implemented with Button ✔ 
 - Customize Keycloak Login Page ( X )
 - Localization ( X )
 - Dark Theme ( X )

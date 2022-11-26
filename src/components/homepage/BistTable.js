@@ -180,19 +180,26 @@ export default function BistTable() {
     return (
     <ThemeProvider theme={darkTheme}>
       <Container style={{ textAlign: "center", color:"black"}}>
+          <div style={
+                {
+                    marginLeft: "-15rem",
+                }
+          }>
         <Button
           variant="contained"
           color="primary"
           onClick={() => chartData("all")}
-          style={{ marginTop: "2.5rem", marginRight: "5rem" ,
-            fontFamily: "Montserrat",
-            fontSize: "1.2rem",
-            backgroundColor: "#ffffff",
-            color: "#000000",
-            border: "1px solid white",
-            borderRadius: "10px",
-            padding: "0.5rem 1rem",
-            cursor: "pointer",
+          style={{
+                marginTop: "2.5rem",
+                marginRight: "5rem" ,
+                fontFamily: "Montserrat",
+                fontSize: "1.2rem",
+                backgroundColor: "#ffffff",
+                color: "#000000",
+                border: "1px solid white",
+                borderRadius: "10px",
+                padding: "0.5rem 1rem",
+                cursor: "pointer",
           }}
         >
             All Bists
@@ -232,16 +239,6 @@ export default function BistTable() {
           >
               MY BISTS
           </Button>
-
-          <div>
-          <SearchBar
-              onCancelSearch={() => setSearch("")}
-              placeholder={"Search Bists"}
-              style={{width: "70%", marginTop: 30 ,marginBottom: 30 , outlineColor: "gold" , marginLeft: "10%",
-                  background:"linear-gradient(to right, #232526, #414345)"
-                  ,backgroundSize:"cover" , borderRadius : 50} }
-              onChange={(e) => setSearch(e)}
-          />
           <Dropdown style={
               {
                   fontFamily: "Montserrat",
@@ -249,17 +246,17 @@ export default function BistTable() {
               }
           }>
               <Dropdown.Toggle style={
-                    {
-                        borderRadius: "10px",
-                        padding: "0.5rem 1rem",
-                        cursor: "pointer",
-                        marginLeft: "74rem",
-                        marginTop: "-9.95rem",
-                        width: "13rem",
-                        height: "3rem",
-                        fontFamily: "Montserrat",
-                        fontSize: "1.2rem",
-                    }
+                  {
+                      borderRadius: "10px",
+                      padding: "0.5rem 1rem",
+                      cursor: "pointer",
+                      marginLeft: "55rem",
+                      marginTop: "-5rem",
+                      width: "10rem",
+                      height: "3rem",
+                      fontFamily: "Montserrat",
+                      fontSize: "1.2rem",
+                  }
               } variant="outline-primary" id="dropdown-basic">
                   Sort By
               </Dropdown.Toggle>
@@ -273,6 +270,14 @@ export default function BistTable() {
               </Dropdown.Menu>
           </Dropdown>
           </div>
+          <SearchBar
+              onCancelSearch={() => setSearch("")}
+              placeholder={"Search Bists"}
+              style={{width: "70%"  ,marginBottom: 30 , outlineColor: "gold" , marginLeft: "15%",
+                  background:"linear-gradient(to right, #232526, #414345)"
+                  ,backgroundSize:"cover" , borderRadius : 50} }
+              onChange={(e) => setSearch(e)}
+          />
         <TableContainer component={Paper}>
           {loading ? (
             <LinearProgress style={{ backgroundColor: "gold" }} />
