@@ -19,6 +19,7 @@ import {bistApi} from "../misc/BistApi";
 import {useKeycloak} from "@react-keycloak/web";
 import { ToastContainer, toast } from 'react-toastify';
 import SearchBar from "material-ui-search-bar";
+import Dropdown from 'react-bootstrap/Dropdown';
 
 
 export function numberWithCommas(x) {
@@ -117,7 +118,7 @@ export default function BistTable() {
     );
   }
 
-    const getNotificationForLogin = (message) => {
+  const getNotificationForLogin = (message) => {
         return (
             toast.error(`${message} 🤬🤬🤬`, {
                 position: "bottom-right",
@@ -140,24 +141,43 @@ export default function BistTable() {
   };
 
   async function chartData(style) {
-      if (style === "all") {
+        if (style === "all") {
           setBists(allBists);
-      } else if (style === "fav") {
-          const filtered = allBists.filter((bist) => favs.includes(bist.name));
-          setBists(filtered);
-      } else if (style === "mybists") {
+        } else if (style === "fav") {
+          if (keycloak.authenticated) {
+              const filtered = allBists.filter((bist) => favs.includes(bist.name));
+              setBists(filtered);
+          }
+        } else if (style === "mybists") {
           if (keycloak.authenticated) {
             const filtered = allBists.filter((bist) => myBist.flatMap(f => f.name).includes(bist.name));
             setBists(filtered);
           }
-      }
+        }
+        else if (style === "Lowest Price") {
+            const sorted = allBists.map(bist => bist).sort((a, b) => a.value - b.value);
+            setBists(sorted);
+        }
+        else if (style === "Highest Price") {
+            const sorted = allBists.map(bist => bist).sort((a, b) => b.value - a.value);
+            setBists(sorted);
+        }
+        else if (style === "Lowest Change") {
+            const sorted = allBists.map(bist => bist).sort((a, b) => a.dailyChangePercentage - b.dailyChangePercentage);
+            setBists(sorted);
+        }
+        else if (style === "Highest Change") {
+            const sorted = allBists.map(bist => bist).sort((a, b) => b.dailyChangePercentage - a.dailyChangePercentage);
+            setBists(sorted);
+        }
+
   }
 
   function isFav(name) {
     return favs.includes(name);
   }
 
-  return (
+    return (
     <ThemeProvider theme={darkTheme}>
       <Container style={{ textAlign: "center", color:"black"}}>
         <Button
@@ -213,14 +233,46 @@ export default function BistTable() {
               MY BISTS
           </Button>
 
+          <div>
           <SearchBar
               onCancelSearch={() => setSearch("")}
               placeholder={"Search Bists"}
-              style={{width: "70%", marginTop: 30 ,marginBottom: 30 , outlineColor: "gold" , marginLeft: "15%",
+              style={{width: "70%", marginTop: 30 ,marginBottom: 30 , outlineColor: "gold" , marginLeft: "10%",
                   background:"linear-gradient(to right, #232526, #414345)"
                   ,backgroundSize:"cover" , borderRadius : 50} }
               onChange={(e) => setSearch(e)}
           />
+          <Dropdown style={
+              {
+                  fontFamily: "Montserrat",
+                  fontSize: "1.2rem",
+              }
+          }>
+              <Dropdown.Toggle style={
+                    {
+                        borderRadius: "10px",
+                        padding: "0.5rem 1rem",
+                        cursor: "pointer",
+                        marginLeft: "74rem",
+                        marginTop: "-9.95rem",
+                        width: "13rem",
+                        height: "3rem",
+                        fontFamily: "Montserrat",
+                        fontSize: "1.2rem",
+                    }
+              } variant="outline-primary" id="dropdown-basic">
+                  Sort By
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                  {['Lowest Price', 'Highest Price', 'Lowest Change', 'Highest Change'].map((item, index) => {
+                      return (
+                          <Dropdown.Item key={index} onClick={() => chartData(item)}>{item}</Dropdown.Item>
+                      )
+                  })}
+              </Dropdown.Menu>
+          </Dropdown>
+          </div>
         <TableContainer component={Paper}>
           {loading ? (
             <LinearProgress style={{ backgroundColor: "gold" }} />
