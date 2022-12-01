@@ -31,11 +31,9 @@ const SingleBistPage = () => {
                     bistApi.isNotification(id, keycloak.tokenParsed.email).then( (response) => {
                         if (response.data) {
                             setUserNotify(true);
-                            document.getElementById("notification").style.color = "red";
 
                         }else {
                             setUserNotify(false);
-                            document.getElementById("notification").style.color = "black";
                         }
                     })
                 }
@@ -302,7 +300,13 @@ const SingleBistPage = () => {
                     style={{marginLeft : "10rem"}}>
                         {bist?.name} ->  {bist.values[bist.values.length - 1].value+" TL"}
                     </Typography>
-                        <FcAlarmClock id={"notification"} style={{marginLeft: "17rem", marginTop: "1rem", width: 66 , height: 66,cursor:"pointer"}}
+                        <FcAlarmClock id={"notification"} style={{
+                            color: {userNotify} ? "green" : "red",
+                            marginLeft: "17rem",
+                            marginTop: "1rem",
+                            width: 66 ,
+                            height: 66,
+                            cursor:"pointer"}}
                                       onClick={() => addNotification(bist?.name)}  />
                         <ConfirmationModal modal={modal} />
                 </Grid.Column>
